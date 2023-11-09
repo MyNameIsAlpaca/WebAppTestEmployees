@@ -50,6 +50,7 @@ public partial class DipendentiAziendaContext : DbContext
 
         modelBuilder.Entity<AttivitaDipendente>(entity =>
         {
+            entity.HasKey(e => e.Id);
             entity.ToTable("AttivitaDipendente");
 
             entity.Property(e => e.Attivita)

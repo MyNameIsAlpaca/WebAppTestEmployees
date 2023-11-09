@@ -28,7 +28,7 @@ namespace WebAppTestEmployees.Controllers
           {
               return NotFound();
           }
-            return await _context.AnagraficaGenericas.ToListAsync();
+            return await _context.AnagraficaGenericas.Include(emp => emp.AttivitaDipendentes).ToListAsync();
         }
 
         // GET: api/AnagraficaGenerica/5
@@ -39,7 +39,9 @@ namespace WebAppTestEmployees.Controllers
           {
               return NotFound();
           }
-            var anagraficaGenerica = await _context.AnagraficaGenericas.FindAsync(id);
+            //var anagraficaGenerica = await _context.AnagraficaGenericas.FindAsync(id);
+
+            var anagraficaGenerica = await _context.AnagraficaGenericas.Include(i => i.AttivitaDipendentes).FirstOrDefaultAsync(i => i.Matricola == id);
 
             if (anagraficaGenerica == null)
             {
