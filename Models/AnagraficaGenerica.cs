@@ -43,15 +43,13 @@ public partial class AnagraficaGenerica
 
     public string? Provincia { get; set; }
 
-    [StringLength(5, MinimumLength = 5, ErrorMessage = "Il cap può essere solo di 5 numeri")]
-
-    [RegularExpression(@"\d{5}", ErrorMessage = "Il cap è composto solo da numeri")]
+    [RegularExpression(@"\d{5}", ErrorMessage = "Il cap è composto da numeri 5")]
 
     public string? Cap { get; set; }
 
     [RegularExpression(@"\d+", ErrorMessage = "Il numero di telefono è composto solo da numeri")]
 
-    [StringLength(15, MinimumLength = 10, ErrorMessage = "Il numero di telefono non è corretto")]
+    [StringLength(13, MinimumLength = 10, ErrorMessage = "Il numero di telefono non è corretto")]
     public string? Telefono { get; set; }
 
     public virtual ICollection<AttivitaDipendente> AttivitaDipendentes { get; set; } = new List<AttivitaDipendente>();
