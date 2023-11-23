@@ -40,7 +40,7 @@ namespace WebAppTestEmployees.Blogic.Authentication
 
             var username = authorizationSplit[0];
 
-            if((username != "gabriele") && (authorizationSplit[1] != "orloff"))
+            if((username != "claudio") && (authorizationSplit[1] != "orloff"))
             {
                 return Task.FromResult(AuthenticateResult.Fail("Nome utente o password errata"));
             }
@@ -50,8 +50,6 @@ namespace WebAppTestEmployees.Blogic.Authentication
             var claims = new ClaimsPrincipal(new ClaimsIdentity(authenticationUser));
 
             return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claims, "BasicAuthentication")));
-
-
         }
     }
 }

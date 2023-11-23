@@ -10,7 +10,6 @@ using WebAppTestEmployees.Models;
 
 namespace WebAppTestEmployees.Controllers
 {
-    [BasicAutorizationAttributes]
     [Route("api/[controller]")]
     [ApiController]
     public class AnagraficaGenericaController : ControllerBase
@@ -87,6 +86,8 @@ namespace WebAppTestEmployees.Controllers
         // POST: api/AnagraficaGenerica
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [BasicAutorizationAttributes]
+
         public async Task<ActionResult<AnagraficaGenerica>> PostAnagraficaGenerica(AnagraficaGenerica anagraficaGenerica)
         {
           if (_context.AnagraficaGenericas == null)
