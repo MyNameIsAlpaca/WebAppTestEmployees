@@ -1,6 +1,9 @@
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using WebAppTestEmployees.Blogic.Authentication;
 using WebAppTestEmployees.Models;
 
 
@@ -24,6 +27,13 @@ namespace WebAppTestEmployees
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            builder.Services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("BasicAuthentication", new AuthorizationPolicyBuilder("BasicAuthentication").RequireAuthenticatedUser().Build());
+            });
+
             var app = builder.Build();
 
             app.UseCors("CorsPolicy");
@@ -35,6 +45,8 @@ namespace WebAppTestEmployees
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

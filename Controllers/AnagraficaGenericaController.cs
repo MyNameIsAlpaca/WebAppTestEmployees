@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebAppTestEmployees.Blogic.Authentication;
 using WebAppTestEmployees.Models;
 
 namespace WebAppTestEmployees.Controllers
 {
+    [BasicAutorizationAttributes]
     [Route("api/[controller]")]
     [ApiController]
     public class AnagraficaGenericaController : ControllerBase
