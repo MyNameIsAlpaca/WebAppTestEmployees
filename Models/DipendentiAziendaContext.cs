@@ -17,6 +17,8 @@ public partial class DipendentiAziendaContext : DbContext
 
     public virtual DbSet<AnagraficaGenerica> AnagraficaGenericas { get; set; }
 
+    public virtual DbSet<myUser> myUser { get; set; }
+
     public virtual DbSet<AttivitaDipendente> AttivitaDipendentes { get; set; }
 
     public virtual DbSet<ErrorLog> ErrorLogs { get; set; }

@@ -40,12 +40,12 @@ namespace WebAppTestEmployees.Blogic.Authentication
 
             var username = authorizationSplit[0];
 
-            if((username != "claudio") && (authorizationSplit[1] != "orloff"))
+            if((username != "claudio") || (authorizationSplit[1] != "denny"))
             {
                 return Task.FromResult(AuthenticateResult.Fail("Nome utente o password errata"));
             }
 
-            var authenticationUser = new AuthenticationUser(username, "BasticAuthentication", true);
+            var authenticationUser = new AuthenticationUser(username, "BasicAuthentication", true);
 
             var claims = new ClaimsPrincipal(new ClaimsIdentity(authenticationUser));
 
