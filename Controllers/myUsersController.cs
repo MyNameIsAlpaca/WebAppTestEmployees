@@ -8,7 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using WebAppTestEmployees.Models;
 using WebAppTestEmployees.Blogic.Authentication;
 using static WebAppTestEmployees.Controllers.LoginController;
-
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Runtime.InteropServices;
 
 namespace WebAppTestEmployees.Controllers
 {
@@ -95,10 +98,45 @@ namespace WebAppTestEmployees.Controllers
             {
                 return Problem("Entity set 'DipendentiAziendaContext.User'  is null.");
             }
+
+            KeyValuePair<string,string> hashpass = EncryptSaltString(myUser.password);
+
+            myUser.password = hashpass.Value;
+
+            myUser.salt = hashpass.Key;
+
             _context.myUser.Add(myUser);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetmyUser", new { email = myUser.email }, myUser);
+        }
+        private KeyValuePair<string, string> EncryptSaltString(string pwdNeedToHash)
+        {
+            byte[] byteSalt = new byte[16];
+            string EncResult = string.Empty;
+            string EncSalt = string.Empty;
+            try
+            {
+                RandomNumberGenerator.Fill(byteSalt);
+                EncResult = Convert.ToBase64String(
+                    //dotnet add package Microsoft.AspNetCore.Cryptography.KeyDerivation --version 7.0.12
+                    KeyDerivation.Pbkdf2(
+                        password: pwdNeedToHash,
+                        salt: byteSalt,
+                        prf: KeyDerivationPrf.HMACSHA256,
+                        iterationCount: 10000,
+                        numBytesRequested: 132
+                    )
+                );
+                EncSalt = Convert.ToBase64String(byteSalt);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+
+            return new KeyValuePair<string, string>(EncSalt, EncResult);
         }
 
         // DELETE: api/myUsers/5

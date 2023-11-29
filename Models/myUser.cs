@@ -9,5 +9,7 @@
         public string password { get; set; }
 
         public string email { get; set; }
+
+        public string? salt { get; set; } = null;
     }
 }
