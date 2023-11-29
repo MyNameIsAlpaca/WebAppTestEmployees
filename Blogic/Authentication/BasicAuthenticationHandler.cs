@@ -31,7 +31,7 @@ namespace WebAppTestEmployees.Blogic.Authentication
 
             var authorizationBase64 = Encoding.UTF8.GetString(Convert.FromBase64String(authorizationRegEx.Replace(authorizationHeader, "$1")));
 
-            var authorizationSplit = authorizationBase64.Split(':', 2);
+            var authorizationSplit = authorizationBase64.Split(':');
 
             if(authorizationSplit.Length != 2)
             {
@@ -40,10 +40,10 @@ namespace WebAppTestEmployees.Blogic.Authentication
 
             var username = authorizationSplit[0];
 
-            if((username != "claudio") || (authorizationSplit[1] != "denny"))
-            {
-                return Task.FromResult(AuthenticateResult.Fail("Nome utente o password errata"));
-            }
+            //if((username != "tony") || (authorizationSplit[1] != "controllo"))
+            //{
+            //    return Task.FromResult(AuthenticateResult.Fail("Nome utente o password errata"));
+            //}
 
             var authenticationUser = new AuthenticationUser(username, "BasicAuthentication", true);
 

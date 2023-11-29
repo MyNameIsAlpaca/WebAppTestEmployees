@@ -86,7 +86,6 @@ namespace WebAppTestEmployees.Controllers
         // POST: api/AnagraficaGenerica
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [BasicAutorizationAttributes]
 
         public async Task<ActionResult<AnagraficaGenerica>> PostAnagraficaGenerica(AnagraficaGenerica anagraficaGenerica)
         {

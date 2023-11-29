@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAppTestEmployees.Models;
 using WebAppTestEmployees.Blogic.Authentication;
+using static WebAppTestEmployees.Controllers.LoginController;
 
 
 namespace WebAppTestEmployees.Controllers
@@ -34,14 +35,14 @@ namespace WebAppTestEmployees.Controllers
         }
 
         // GET: api/myUsers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<myUser>> GetmyUser(int id)
+        [HttpGet("{email}")]
+        public async Task<ActionResult<myUser>> GetMyUser(string email)
         {
-          if (_context.myUser == null)
-          {
-              return NotFound();
-          }
-            var myUser = await _context.myUser.FindAsync(id);
+            if (_context.myUser == null)
+            {
+                return NotFound();
+            }
+            var myUser = await _context.myUser.Where(e => e.email == email).FirstOrDefaultAsync();
 
             if (myUser == null)
             {
@@ -87,17 +88,17 @@ namespace WebAppTestEmployees.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [BasicAutorizationAttributes]
         [HttpPost]
-        
+
         public async Task<ActionResult<myUser>> PostmyUser(myUser myUser)
         {
-          if (_context.myUser == null)
-          {
-              return Problem("Entity set 'DipendentiAziendaContext.User'  is null.");
-          }
+            if (_context.myUser == null)
+            {
+                return Problem("Entity set 'DipendentiAziendaContext.User'  is null.");
+            }
             _context.myUser.Add(myUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetmyUser", new { id = myUser.Id }, myUser);
+            return CreatedAtAction("GetmyUser", new { email = myUser.email }, myUser);
         }
 
         // DELETE: api/myUsers/5
